@@ -79,17 +79,19 @@ jobs:
           }
           console.log('PASS: original TravelIt root preserved; ThinkIt 23-file static cache, scoped nested PWA');
           NODE
-      - name: Add verified shared SIMA suite without altering existing apps
+      - name: Include neutral four-app launcher and preserve existing installations
         shell: bash
         run: |
           set -euo pipefail
+          node site/apps/test.mjs
           node site/sima/test.mjs
           test -f travelit/artifacts/rc1-preview/js/app.js
           test -f travelit/artifacts/rc1-preview/thinkit/index.html
+          cp -a site/apps travelit/artifacts/rc1-preview/apps
           cp -a site/sima travelit/artifacts/rc1-preview/sima
+          test -f travelit/artifacts/rc1-preview/apps/index.html
           test -f travelit/artifacts/rc1-preview/sima/index.html
-          test -f travelit/artifacts/rc1-preview/sima/sw.js
-          echo 'SIMA additive shell verified. Original TravelIt RC1 and ThinkIt T42-C1 remain unchanged.'
+          echo 'Neutral four-app launcher ready. TravelIt RC1 and ThinkIt T42 unchanged.'
       - name: Prepare GitHub Pages
         if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5

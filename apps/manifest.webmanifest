@@ -1,0 +1,17 @@
+{
+  "id": "/apps/",
+  "name": "Your Apps — KeepIt, ThinkIt, LiveIt & TravelIt",
+  "short_name": "Your Apps",
+  "start_url": "/apps/",
+  "scope": "/apps/",
+  "display": "standalone",
+  "background_color": "#f9fcfc",
+  "theme_color": "#113149",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

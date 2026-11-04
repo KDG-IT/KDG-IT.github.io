@@ -1,0 +1,55 @@
+{
+  "schema": "app-ecosystem.launch.v1",
+  "version": "2026-11-04",
+  "policy": "KeepIt owns canonical notes/documents. Other apps own their domain data. Launcher never transfers browser data or tokens.",
+  "apps": [
+    {
+      "id": "keepit",
+      "name": "KeepIt",
+      "group": "NOTES & DOCUMENTS",
+      "summary": "Your authoritative notes and document library",
+      "url": "https://kdg-007.github.io/",
+      "mode": "external",
+      "release": "RC.11 (current device QA)",
+      "data": "KeepIt origin / your existing library",
+      "notes": "Canonical native notes and originals live here",
+      "state": "Mac opens; iPhone and live OneDrive not yet certified"
+    },
+    {
+      "id": "thinkit",
+      "name": "ThinkIt",
+      "group": "VISUAL IDEAS",
+      "summary": "Mind maps, org charts, flowcharts and bubble diagrams",
+      "url": "/thinkit/",
+      "mode": "embedded",
+      "release": "T42-C1 standalone",
+      "data": "ThinkIt local diagram projects",
+      "notes": "Existing KeepIt note links not enabled in this standalone candidate",
+      "state": "Usable diagramming; local save and offline browser tested"
+    },
+    {
+      "id": "liveit",
+      "name": "LiveIt",
+      "group": "DAILY LIFE",
+      "summary": "Daily journal, tasks, reminders and look-ahead",
+      "url": "https://kdg-007.github.io/partners/liveit/thinkit/1a26c53e24e1b903260b/index.html",
+      "mode": "external",
+      "release": "LiveIt published local-first QA workspace",
+      "data": "Existing KeepIt host; not newer standalone W18A build",
+      "notes": "Canonical notes belong to KeepIt; this direct workspace does not imply native note sync",
+      "state": "Opens directly without requiring KeepIt library initialization; newer standalone W18A not yet deployed"
+    },
+    {
+      "id": "travelit",
+      "name": "TravelIt",
+      "group": "FAMILY TRAVEL",
+      "summary": "Trip itineraries, packing, vehicles and budgets",
+      "url": "/",
+      "mode": "embedded",
+      "release": "RC1 owner-tested on iPhone",
+      "data": "Local RC1 browser storage at this origin",
+      "notes": "Trip records are local; native KeepIt note integration pending",
+      "state": "Owner passed RC1 iPhone tests; cloud sync not enabled"
+    }
+  ]
+}

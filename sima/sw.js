@@ -1,5 +1,5 @@
-/* SIMA launcher only. Does not intercept any other application's routes or data. */
-const NAME='sima-launcher-20261104-v1';
+/* Your Apps launcher only. Does not intercept any other application's routes or data. */
+const NAME='app-ecosystem-launcher-sima-v2';
 const FILES=['./','./index.html','./style.css','./app.js','./registry.json','./manifest.webmanifest','./icon.svg'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(NAME).then(c=>c.addAll(FILES))));
 self.addEventListener('activate',event=>event.waitUntil(self.clients.claim()));
