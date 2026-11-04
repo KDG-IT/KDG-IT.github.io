@@ -1,7 +1,12 @@
-name: TravelIt RC1 isolated GitHub Pages QA
-# Install this template ONLY in a separately owned GitHub organization
-# site repo named <organization>.github.io. It is inert in TravelIt.
+name: TravelIt RC1 + ThinkIt standalone preview · GitHub Pages
+
+# One GitHub Pages site, preserving the approved TravelIt build while adding
+# a separately scoped ThinkIt preview path. PRs build but never publish.
 on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -14,32 +19,83 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  verify:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Get exact reviewed TravelIt release-candidate source
+      - name: Checkout current organization site add-ons
+        uses: actions/checkout@v4
+        with:
+          path: site
+          persist-credentials: false
+      - name: Check out exact previously accepted TravelIt RC1 source
         uses: actions/checkout@v4
         with:
           repository: kdg-007/travelit-alpha
           ref: 9fd091fb446487fe515727d1270fa0cd473ed265
+          path: travelit
           persist-credentials: false
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Assemble isolated test-only app
+      - name: Rebuild original TravelIt root without changing its version
+        working-directory: travelit
         run: node scripts/build-rc1-preview.mjs
-      - name: Verify sealed preview before publication
+      - name: Verify original TravelIt files and sealed preview
+        working-directory: travelit
         run: node scripts/preview-integrity.mjs artifacts/rc1-preview
+      - name: Merge and verify isolated ThinkIt preview (never replace TravelIt)
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f travelit/artifacts/rc1-preview/index.html
+          test -f travelit/artifacts/rc1-preview/PREVIEW_INTEGRITY.json
+          test -f site/thinkit/index.html
+          test -f site/thinkit/t42c1-11eee8e45cad/index.html
+          cp -a site/thinkit travelit/artifacts/rc1-preview/thinkit
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+          const root=path.resolve('travelit/artifacts/rc1-preview');
+          const v='t42c1-11eee8e45cad',dir=path.join(root,'thinkit',v);
+          const html=fs.readFileSync(path.join(dir,'index.html'),'utf8');
+          const sw=fs.readFileSync(path.join(dir,'sw.js'),'utf8');
+          if(!html.includes('/thinkit/'+v+'/assets/thinkit-2.js')||
+             !html.includes('./standalone-bootstrap.js')||
+             !fs.existsSync(path.join(dir,'assets/bubble-2.js'))||
+             !fs.existsSync(path.join(root,'sw.js'))||
+             !fs.existsSync(path.join(root,'js/app.js')))
+            throw Error('HOLD: missing static ThinkIt/TravelIt entries');
+          const m=sw.match(/const ASSETS=(\[[^\n]+\]);/);
+          if(!m)throw Error('HOLD: immutable ThinkIt worker precache missing');
+          const assets=JSON.parse(m[1]);
+          if(assets.length!==23)throw Error('HOLD: ThinkIt static asset inventory drifted');
+          for(const p of assets){
+            if(!p.startsWith('./')||p.includes('..'))throw Error('HOLD: unsafe precache path');
+            const file=path.resolve(dir,p);
+            if(!file.startsWith(dir+path.sep)&&file!==dir)throw Error('HOLD: precache escape');
+            if(!fs.existsSync(file)||!fs.statSync(file).isFile()&&p!=='./')
+              throw Error('HOLD: missing ThinkIt precache asset '+p);
+          }
+          console.log('PASS: original TravelIt root preserved; ThinkIt 23-file static cache, scoped nested PWA');
+          NODE
       - name: Prepare GitHub Pages
+        if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
-      - name: Upload only isolated preview files
+      - name: Upload combined static site artifact (never a public deploy on PR)
         uses: actions/upload-pages-artifact@v3
         with:
-          path: artifacts/rc1-preview
-      - name: Publish to the separate organization origin
+          path: travelit/artifacts/rc1-preview
+
+  publish:
+    name: Publish verified TravelIt + ThinkIt only from main
+    if: github.event_name != 'pull_request'
+    needs: verify
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish the verified combined artifact
         id: deployment
         uses: actions/deploy-pages@v4
