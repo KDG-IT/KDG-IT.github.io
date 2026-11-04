@@ -19,11 +19,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  verify:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout current organization site add-ons
         uses: actions/checkout@v4
@@ -85,12 +82,20 @@ jobs:
       - name: Prepare GitHub Pages
         if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
-      - name: Upload combined private QA preview without user records
-        if: github.event_name != 'pull_request'
+      - name: Upload combined static site artifact (never a public deploy on PR)
         uses: actions/upload-pages-artifact@v3
         with:
           path: travelit/artifacts/rc1-preview
-      - name: Publish both apps on existing organization site
-        if: github.event_name != 'pull_request'
+
+  publish:
+    name: Publish verified TravelIt + ThinkIt only from main
+    if: github.event_name != 'pull_request'
+    needs: verify
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish the verified combined artifact
         id: deployment
         uses: actions/deploy-pages@v4
