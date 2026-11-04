@@ -1,0 +1,17 @@
+{
+  "id": "/sima/",
+  "name": "SIMA — KeepIt, ThinkIt, LiveIt & TravelIt",
+  "short_name": "SIMA",
+  "start_url": "/sima/",
+  "scope": "/sima/",
+  "display": "standalone",
+  "background_color": "#f9fcfc",
+  "theme_color": "#113149",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
