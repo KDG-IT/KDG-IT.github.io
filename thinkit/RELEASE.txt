@@ -1,0 +1,7 @@
+ThinkIt standalone preview RC1
+Source: kdg-007/thinkit-dev main
+Review: T42-C1 Bubble drag recovery
+Version: t42c1-11eee8e45cad
+URL: https://kdg-it.github.io/thinkit/
+Local-only diagrams. KeepIt native notes and OneDrive are not connected.
+Export important projects regularly.
