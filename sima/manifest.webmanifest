@@ -1,7 +1,7 @@
 {
   "id": "/sima/",
-  "name": "SIMA — KeepIt, ThinkIt, LiveIt & TravelIt",
-  "short_name": "SIMA",
+  "name": "Your Apps — KeepIt, ThinkIt, LiveIt & TravelIt",
+  "short_name": "Your Apps",
   "start_url": "/sima/",
   "scope": "/sima/",
   "display": "standalone",

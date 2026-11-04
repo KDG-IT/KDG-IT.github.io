@@ -1,13 +1,7 @@
-# SIMA v1 launch shell — 4 Nov 2026
+# Your Apps — four-app launch shell
 
-SIMA is an additive, shared navigation and presentation shell at https://kdg-it.github.io/sima/ using the already approved TravelIt RC1 root and ThinkIt T42-C1 standalone subpath. It never migrates or touches existing browser data.
+There is no owner-approved umbrella brand. **Do not label the collection with an invented name.** Use neutral 'Your Apps' in the UI.
 
-## Four app destinations
-- KeepIt: https://kdg-007.github.io/ (RC.11 device QA, canonical notes and document originals)
-- ThinkIt: /thinkit/ (standalone diagrams, note bridge pending)
-- LiveIt: https://kdg-007.github.io/partners/liveit/thinkit/1a26c53e24e1b903260b/index.html (direct older published local-first workspace, NOT newer standalone W18A)
-- TravelIt: / (owner-tested RC1, locally stored trip data)
+Primary address: https://kdg-it.github.io/apps/. Existing launcher address /sima/ remains functional with rebranded content, so prior bookmarks and Home Screen installs do not break. The legacy URL is not an approved brand.
 
-The same-origin ThinkIt and TravelIt are available inside the shell or full screen. KeepIt and LiveIt launch in their own origin rather than third-party iframes to protect existing browser storage/authentication. Shared-note integration is NOT accomplished simply by navigation. Notes and originals remain owned by KeepIt; other apps retain their domain records. The launcher never copies data, accesses IndexedDB, shares tokens or claims cloud success. Its service worker is scoped to /sima/ and does not intercept other app pages.
-
-Publication uses GitHub Actions to rebuild and verify the original pinned TravelIt RC1 source and unchanged ThinkIt T42-C1 before adding this shell. No replacement of existing root content or service workers.
+KeepIt owns canonical notes and originals, ThinkIt diagrams, LiveIt daily records, and TravelIt trips. No data migration or implicit cloud synchronization is performed by this launcher.

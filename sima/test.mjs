@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 const text=(file)=>fs.readFileSync(new URL('./'+file,import.meta.url),'utf8');
 const r=JSON.parse(text('registry.json'));
 const html=text('index.html'), script=text('app.js'), worker=text('sw.js');
-assert.equal(r.schema,'sima.suite-launch.v1');
+assert.equal(r.schema,'app-ecosystem.launch.v1');
 assert.deepEqual(r.apps.map(a=>a.id).sort(),['keepit','liveit','thinkit','travelit']);
 const wanted={keepit:'https://kdg-007.github.io/',thinkit:'/thinkit/',liveit:'https://kdg-007.github.io/partners/liveit/thinkit/1a26c53e24e1b903260b/index.html',travelit:'/'};
 for(const a of r.apps){

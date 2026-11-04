@@ -2,7 +2,7 @@ import registry from './registry.json' with {type:'json'};
 const apps=new Map(registry.apps.map(app=>[app.id,app]));
 const $=id=>document.getElementById(id);
 const nav=[...document.querySelectorAll('.nav button')];
-if(registry.schema!=='sima.suite-launch.v1'||apps.size!==4)throw Error('Invalid shared application registry');
+if(registry.schema!=='app-ecosystem.launch.v1'||apps.size!==4)throw Error('Invalid shared application registry');
 for(const app of apps.values()){
  const url=new URL(app.url,location.origin);
  if(!['embedded','external'].includes(app.mode)||app.mode==='embedded'&&url.origin!==location.origin||app.mode==='external'&&url.origin!=='https://kdg-007.github.io')throw Error('Unsafe application destination: '+app.id);
