@@ -5,7 +5,7 @@ const r=JSON.parse(text('registry.json'));
 const html=text('index.html'), script=text('app.js'), worker=text('sw.js');
 assert.equal(r.schema,'sima.suite-launch.v1');
 assert.deepEqual(r.apps.map(a=>a.id).sort(),['keepit','liveit','thinkit','travelit']);
-const wanted={keepit:'https://kdg-007.github.io/',thinkit:'/thinkit/',liveit:'https://kdg-007.github.io/?connected-app=liveit',travelit:'/'};
+const wanted={keepit:'https://kdg-007.github.io/',thinkit:'/thinkit/',liveit:'https://kdg-007.github.io/partners/liveit/thinkit/1a26c53e24e1b903260b/index.html',travelit:'/'};
 for(const a of r.apps){
  assert.equal(a.url,wanted[a.id]);
  const u=new URL(a.url,'https://kdg-it.github.io');

@@ -32,12 +32,12 @@
       "name": "LiveIt",
       "group": "DAILY LIFE",
       "summary": "Daily journal, tasks, reminders and look-ahead",
-      "url": "https://kdg-007.github.io/?connected-app=liveit",
+      "url": "https://kdg-007.github.io/partners/liveit/thinkit/1a26c53e24e1b903260b/index.html",
       "mode": "external",
-      "release": "KeepIt-hosted LiveIt QA",
+      "release": "LiveIt published local-first QA workspace",
       "data": "Existing KeepIt host; not newer standalone W18A build",
-      "notes": "KeepIt is the only canonical note store",
-      "state": "Current hosted workspace; full stand-alone release not installed"
+      "notes": "Canonical notes belong to KeepIt; this direct workspace does not imply native note sync",
+      "state": "Opens directly without requiring KeepIt library initialization; newer standalone W18A not yet deployed"
     },
     {
       "id": "travelit",
